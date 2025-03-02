@@ -2,22 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+
+    --radius: 0.5rem;
   }
 }
 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: white;
+    color: #333;
+  }
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
+}
+
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+  background: white;
 }
 
 @layer utilities {
@@ -25,3 +63,73 @@ body {
     text-wrap: balance;
   }
 }
+
+/* Animasi untuk grafik batang */
+@keyframes growBar {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.bar-chart-bar {
+  animation: growBar 1s ease-out forwards;
+  transition: all 0.3s ease;
+}
+
+.bar-chart-bar:hover {
+  filter: brightness(1.1);
+  transform: scaleY(1.05);
+}
+
+.condition-card {
+  transition: all 0.3s ease;
+}
+
+.condition-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Warna untuk berbagai jenis kondisi kulit */
+.melanoma-color { background-color: rgb(220, 38, 38); }
+.melanoma-color:hover { background-color: rgb(185, 28, 28); }
+
+.bcc-color { background-color: rgb(217, 119, 6); }
+.bcc-color:hover { background-color: rgb(180, 83, 9); }
+
+.scc-color { background-color: rgb(234, 88, 12); }
+.scc-color:hover { background-color: rgb(194, 65, 12); }
+
+.ak-color { background-color: rgb(234, 179, 8); }
+.ak-color:hover { background-color: rgb(202, 138, 4); }
+
+.default-color { background-color: rgb(59, 130, 246); }
+.default-color:hover { background-color: rgb(37, 99, 235); }
+
+/* Tooltip untuk informasi tambahan */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
