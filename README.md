@@ -1,107 +1,74 @@
-# Aplikasi Deteksi Melanoma
+# Melanoma Predict
 
-Aplikasi web untuk mendeteksi melanoma menggunakan model EfficientNet-B3 yang dilatih dengan dataset SIIM-ISIC Melanoma Classification.
+An AI-powered skin cancer detection tool that helps identify potential skin conditions with advanced image analysis technology.
 
-## Tentang Model
+## Features
 
-Model yang digunakan adalah EfficientNet-B3 yang dilatih untuk mengklasifikasikan lesi kulit ke dalam 9 kategori:
-- BKL (Benign Keratosis-like Lesions)
-- DF (Dermatofibroma)
-- Melanoma
-- Nevus
-- SCC (Squamous Cell Carcinoma)
-- VASC (Vascular Lesions)
-- AK (Actinic Keratosis)
-- BCC (Basal Cell Carcinoma)
-- Unknown
+- **Skin Lesion Analysis**: Upload images of skin lesions for AI-powered analysis
+- **Interactive Results**: View detailed probability charts for various skin conditions
+- **Comprehensive Information**: Get detailed information about detected conditions, including risk levels and recommended actions
+- **Optional Metadata**: Include patient metadata for more accurate predictions (when supported by the model)
 
-Model ini dilatih menggunakan teknik augmentasi data dan transfer learning untuk meningkatkan akurasi.
+## Technologies Used
 
-### Fitur Metadata
+- **Frontend**: Next.js, React, TailwindCSS, Chart.js
+- **Backend**: Python, FastAPI
+- **AI Model**: PyTorch, EfficientNet-B3
+- **Data Visualization**: Chart.js
 
-Model ini mendukung penggunaan metadata pasien untuk meningkatkan akurasi prediksi:
-- **Jenis Kelamin**: Pria atau wanita
-- **Usia**: Usia pasien dalam tahun
-- **Lokasi Anatomi**: Lokasi lesi pada tubuh (kepala/leher, torso, ekstremitas atas/bawah, dll.)
+## Getting Started
 
-Metadata ini digunakan sebagai fitur tambahan dalam model, yang telah terbukti meningkatkan akurasi prediksi melanoma.
+### Prerequisites
 
-## Prasyarat
+- Node.js (v14 or later)
+- Python (v3.8 or later)
+- npm or yarn
 
-- Node.js (versi 18 atau lebih baru)
-- Python 3.8 atau lebih baru
-- PyTorch dan dependensi lainnya
+### Installation
 
-## Instalasi
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/melanoma-predict.git
+   cd melanoma-predict
+   ```
 
-1. Clone repositori ini
-2. Instal dependensi JavaScript:
+2. Install frontend dependencies:
+   ```
+   npm install
+   # or
+   yarn install
+   ```
 
-```bash
-npm install
-```
+3. Install Python dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
-3. Instal dependensi Python:
+### Running the Application
 
-```bash
-pip install torch torchvision pillow python-multipart geffnet
-```
+1. Start the development server:
+   ```
+   npm run dev
+   # or
+   yarn dev
+   ```
 
-## Menyiapkan Model
+2. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-1. Letakkan file model PyTorch (.pth) Anda di direktori `public/models/` dengan nama `model.pth`.
-   - Model ini harus berupa model EfficientNet-B3 yang dilatih dengan kode di `trainingCode.ipynb`
-   - Pastikan model memiliki output 9 kelas sesuai dengan kategori lesi kulit yang disebutkan di atas
+## Usage
 
-## Menjalankan Aplikasi
+1. Navigate to the Detection Tool page
+2. Upload a clear image of the skin lesion
+3. Optionally include patient metadata for more accurate results
+4. Click "Analyze Image" to get predictions
+5. Review the results and detailed information about detected conditions
 
-1. Jalankan server pengembangan:
+## Disclaimer
 
-```bash
-npm run dev
-```
+This tool is intended for educational and informational purposes only. It should not be used as a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding a medical condition.
 
-2. Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
+The predictions made by this tool are based on machine learning algorithms and may not always be accurate. Early detection of skin cancer is crucial, so if you notice any suspicious changes in your skin, please consult a dermatologist immediately.
 
-## Cara Menggunakan
+## License
 
-1. Unggah gambar lesi kulit menggunakan form yang disediakan.
-2. (Opsional) Masukkan metadata pasien untuk meningkatkan akurasi:
-   - Jenis kelamin
-   - Usia
-   - Lokasi anatomi lesi
-3. Klik tombol "Analyze Image" untuk mendapatkan prediksi.
-4. Hasil akan ditampilkan dengan:
-   - Prediksi utama (Melanoma atau Non-Melanoma)
-   - Tingkat kepercayaan prediksi
-   - Probabilitas untuk setiap kelas lesi kulit
-
-## Alur Kerja Aplikasi
-
-User → Uploads image + metadata → API processes inputs → Model predicts → Results displayed
-
-1. Pengguna mengunggah gambar lesi kulit dan metadata (opsional)
-2. Gambar dan metadata dikirim ke API endpoint
-3. API menyimpan gambar sementara dan menjalankan model PyTorch dengan metadata
-4. Model melakukan prediksi dengan mempertimbangkan gambar dan metadata
-5. Hasil prediksi dikembalikan dan ditampilkan kepada pengguna
-
-## Struktur Proyek
-
-- `app/` - Kode Next.js
-- `app/api/predict/` - API endpoint untuk prediksi
-- `components/` - Komponen React
-- `lib/python/` - Kode Python untuk menjalankan model
-- `public/models/` - Direktori untuk menyimpan model PyTorch
-
-## Catatan Penting
-
-Aplikasi ini hanya untuk tujuan pendidikan dan tidak boleh digunakan sebagai pengganti nasihat medis profesional. Selalu konsultasikan dengan dokter kulit untuk diagnosis yang tepat.
-
-## Teknologi yang Digunakan
-
-- Next.js
-- React
-- PyTorch
-- EfficientNet-B3
-- TailwindCSS
+[MIT](LICENSE)
