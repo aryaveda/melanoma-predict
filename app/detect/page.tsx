@@ -22,7 +22,7 @@ export default function DetectPage() {
               <ol className="list-decimal list-inside text-gray-700 space-y-2">
                 <li>Upload a clear image of the skin lesion</li>
                 <li>Optionally include patient metadata for more accurate results</li>
-                <li>Click "Analyze Image" to get predictions</li>
+                <li>Click &quot;Analyze Image&quot; to get predictions</li>
                 <li>Review the results and detailed information about detected conditions</li>
               </ol>
             </div>

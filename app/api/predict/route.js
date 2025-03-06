@@ -110,7 +110,7 @@ if __name__ == "__main__":
           } else {
             reject(new Error(`Failed to find valid JSON in Python output: ${result}`));
           }
-        } catch (error) {
+        } catch {
           reject(new Error(`Failed to parse Python output: ${result}`));
         }
       }

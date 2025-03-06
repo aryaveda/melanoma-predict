@@ -39,31 +39,24 @@ CLASS_NAMES = ["BKL", "DF", "melanoma", "nevus", "SCC", "VASC", "AK", "BCC", "un
 
 class MelanomaModel:
     def __init__(self, model_path):
+        """
+        Inisialisasi model melanoma
+        
+        Args:
+            model_path: Path ke file model yang akan diload
+        """
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.model = self.load_model(model_path)
+        self.transform = self.get_transforms()
+        self.uses_metadata = False  # Will be set in load_model
         
-        # Load model
-        try:
-            # Coba load model langsung
-            self.model = self.load_model(model_path)
-            self.model.eval()  # Set model to evaluation mode
-        except Exception as e:
-            print(f"Error loading model: {e}", file=sys.stderr)
-            raise
-        
-        # Define image transformations sesuai dengan yang digunakan saat pelatihan
-        self.transform = transforms.Compose([
-            transforms.Resize((256, 256)),  # Sesuai dengan image_size di kode pelatihan
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-        ])
-        
-        # Definisi anatomi site untuk one-hot encoding
-        self.anatom_sites = ['head/neck', 'lower extremity', 'oral/genital', 'palms/soles', 
-                            'torso', 'upper extremity', 'unknown']
-        
-        # Flag untuk menandai apakah model menggunakan metadata
-        self.uses_metadata = False
-    
+        # Daftar lokasi anatomi yang mungkin
+        self.anatom_sites = [
+            'head/neck', 'oral/genital', 'palms/soles', 
+            'torso', 'upper extremity', 'lower extremity',
+            'unknown'
+        ]
+
     def load_model(self, model_path):
         """
         Load model dari path yang diberikan
@@ -149,9 +142,6 @@ class MelanomaModel:
         n_images = 1  # log1p of number of images
         image_size = 0  # log of image size (we'll use a default value)
         
-        # One-hot encoding untuk anatom_site
-        anatom_site_onehot = [0] * len(self.anatom_sites)
-        
         # Parse metadata
         if metadata:
             if 'sex' in metadata:
@@ -166,20 +156,23 @@ class MelanomaModel:
                     age_approx = min(age / 90.0, 1.0)  # normalize by 90 as in training
                 except (ValueError, TypeError):
                     pass
-            
-            if 'anatom_site_general' in metadata and metadata['anatom_site_general']:
-                site = metadata['anatom_site_general'].lower()
-                if site in self.anatom_sites:
-                    anatom_site_onehot[self.anatom_sites.index(site)] = 1
-                else:
-                    # If not found, mark as unknown
-                    anatom_site_onehot[self.anatom_sites.index('unknown')] = 1
+        
+        # One-hot encoding untuk anatom_site
+        anatom_site_onehot = [0] * len(self.anatom_sites)
+        
+        if metadata and 'anatom_site_general' in metadata and metadata['anatom_site_general']:
+            site = metadata['anatom_site_general'].lower()
+            if site in self.anatom_sites:
+                anatom_site_onehot[self.anatom_sites.index(site)] = 1
+            else:
+                # If not found, mark as unknown
+                anatom_site_onehot[self.anatom_sites.index('unknown')] = 1
         else:
             # If no metadata, mark anatom_site as unknown
             anatom_site_onehot[self.anatom_sites.index('unknown')] = 1
         
-        # Combine all features
-        meta_features = anatom_site_onehot + [sex, age_approx, n_images, image_size]
+        # Combine all features sesuai urutan training
+        meta_features = [sex, age_approx, n_images, image_size] + anatom_site_onehot
         
         return torch.tensor([meta_features], dtype=torch.float32).to(self.device)
     

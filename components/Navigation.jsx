@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
@@ -9,8 +10,17 @@ export default function Navigation() {
   return (
     <nav className="bg-white shadow-sm py-4">
       <div className="max-w-5xl mx-auto px-4 flex justify-between items-center">
-        <Link href="/" className="text-xl font-bold text-blue-600">
-          Skin Cancer Detection
+        <Link href="/" className="flex items-center gap-2">
+          <Image 
+            src="/images/logo192.png" 
+            alt="Melanoma Predict Logo" 
+            width={40} 
+            height={40}
+            className="rounded-md"
+          />
+          <span className="text-xl font-bold text-blue-600">
+            Skin Cancer Detection
+          </span>
         </Link>
         <div className="flex gap-6">
           <Link 

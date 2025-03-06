@@ -1,7 +1,10 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import Image from 'next/image';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Chart from 'chart.js/auto';
 
 // Information about skin cancer types
 const skinCancerInfo = {
@@ -305,7 +308,7 @@ export default function ImageUploader() {
         chartInstance.destroy();
       }
     };
-  }, [prediction]);
+  }, [prediction, chartInstance]);
 
   return (
     <div className="w-full max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -409,10 +412,11 @@ export default function ImageUploader() {
           <div className="mb-4">
             <p className="text-gray-700 mb-2">Preview:</p>
             <div className="relative w-full h-64 bg-gray-100 rounded-md overflow-hidden">
-              <img
+              <Image
                 src={previewUrl}
                 alt="Preview"
-                className="w-full h-full object-contain"
+                fill
+                className="object-contain"
               />
             </div>
           </div>

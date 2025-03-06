@@ -30,7 +30,7 @@ export function MelanomaPredict() {
     }
   }
 
-  const handleSubmit = async (formData: FormData) => {
+  const handleSubmit = async () => {
     setIsSubmitting(true)
 
     // Simulate API call with a timeout

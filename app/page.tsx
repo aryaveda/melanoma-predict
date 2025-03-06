@@ -11,6 +11,16 @@ export default function Home() {
       {/* Hero Section */}
       <section className="flex-1 flex flex-col items-center justify-center px-4 py-16 bg-gradient-to-b from-white to-blue-50">
         <div className="max-w-5xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <Image 
+              src="/images/logo512.png" 
+              alt="Melanoma Predict Logo" 
+              width={120} 
+              height={120}
+              className="rounded-lg shadow-md"
+            />
+          </div>
+          
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Early Detection Saves Lives
           </h1>
